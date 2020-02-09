@@ -54,7 +54,7 @@ query orders {
 }
 ```
 ***
-Update Order
+**Update Order**
 ```graphql
 mutation updateOrder ($orderId: Int!, $input: OrderInput!) {
   updateOrder(orderId: $orderId, input: $input) {
@@ -87,7 +87,7 @@ Query variables:
 }
 ```
 ***
-Delete Order
+**Delete Order**
 ```graphql
 mutation deleteOrder ($orderId: Int!) {
   deleteOrder(orderId: $orderId)
