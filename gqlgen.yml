@@ -1,0 +1,20 @@
+# .gqlgen.yml example
+#
+# Refer to https://gqlgen.com/config/
+# for detailed .gqlgen.yml documentation.
+
+schema:
+- schema.graphql
+exec:
+  filename: generated.go
+model:
+  filename: models_gen.go
+resolver:
+  filename: resolver.go
+  type: Resolver
+models:
+  Order:
+    model: github.com/soberkoder/go-orders-graphql-api/models.Order
+  Item:
+    model: github.com/soberkoder/go-orders-graphql-api/models.Item
+autobind: []
