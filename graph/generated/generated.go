@@ -45,7 +45,6 @@ type DirectiveRoot struct {
 type ComplexityRoot struct {
 	Item struct {
 		ID          func(childComplexity int) int
-		ItemType    func(childComplexity int) int
 		ProductCode func(childComplexity int) int
 		ProductName func(childComplexity int) int
 		Quantity    func(childComplexity int) int
@@ -99,13 +98,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Item.ID(childComplexity), true
-
-	case "Item.itemType":
-		if e.complexity.Item.ItemType == nil {
-			break
-		}
-
-		return e.complexity.Item.ItemType(childComplexity), true
 
 	case "Item.productCode":
 		if e.complexity.Item.ProductCode == nil {
@@ -275,7 +267,6 @@ type Item {
     productCode: String!
     productName: String!
     quantity: Int!
-    itemType: String!
 }
 
 input OrderInput {
@@ -540,40 +531,6 @@ func (ec *executionContext) _Item_quantity(ctx context.Context, field graphql.Co
 	res := resTmp.(int)
 	fc.Result = res
 	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Item_itemType(ctx context.Context, field graphql.CollectedField, obj *model.Item) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Item",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ItemType, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_createOrder(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -2089,11 +2046,6 @@ func (ec *executionContext) _Item(ctx context.Context, sel ast.SelectionSet, obj
 			}
 		case "quantity":
 			out.Values[i] = ec._Item_quantity(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "itemType":
-			out.Values[i] = ec._Item_itemType(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}

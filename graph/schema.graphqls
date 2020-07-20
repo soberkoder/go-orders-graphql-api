@@ -10,7 +10,6 @@ type Item {
     productCode: String!
     productName: String!
     quantity: Int!
-    itemType: String!
 }
 
 input OrderInput {

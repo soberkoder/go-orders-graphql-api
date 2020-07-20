@@ -2,14 +2,6 @@
 
 package model
 
-type Item struct {
-	ID          int    `json:"id"`
-	ProductCode string `json:"productCode"`
-	ProductName string `json:"productName"`
-	Quantity    int    `json:"quantity"`
-	ItemType    string `json:"itemType"`
-}
-
 type ItemInput struct {
 	ProductCode string `json:"productCode"`
 	ProductName string `json:"productName"`
